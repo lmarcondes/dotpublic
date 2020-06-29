@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#Ibus daemon
+export XMODIFIERS=@im=ibus
+ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3
+# ibus-daemon -drx
+xset s 120 180

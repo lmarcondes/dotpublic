@@ -1,0 +1,261 @@
+# set modifier
+set $super Mod4
+set $alt Mod1
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# set font
+font pango: DejaVuSansMono Nerd Font 9
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+#autostart
+exec --no-startup-id xsettingsd &
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf &
+exec --no-startup-id nm-applet &
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
+exec_always --no-startup-id $HOME/.config/dunst/scripts/dunst.sh &
+exec_always --no-startup-id $HOME/.local/bin/alacritty_xr_colorscheme
+# exec --no-startup-id pkill insync && insync || insync &
+# exec_always --no-startup-id pkill mpd && mpd || mpd
+exec --no-startup-id pkill redshift && redshift || redshift &
+exec --no-startup-id wal -i ~/.wallpapers --backend haishoku
+
+set $Locker i3lock -n -i $(cat ~/.cache/wal/wal) && sleep 1
+exec --no-startup-id xss-lock --transfer-sleep-lock -- "$Locker" &
+# exec --no-startup-id xautolock -time 10 -locker "$Locker" &
+
+# start a terminal
+bindsym $super+Return exec i3-sensible-terminal
+bindsym $super+Shift+Return exec alacritty
+
+# start dmenu (a program launcher)
+# bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=8'"
+# bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'DejaVuSansMono Nerd Font 10' -theme '~/.cache/wal/colors-rofi-dark.rasi' -show-icons
+bindsym $super+d exec rofi -show drun
+bindsym $super+o exec rofi -show emoji
+bindsym $super+u exec unipicker
+
+# common apps keybinds
+
+bindsym --release $super+p exec scrot -s -e 'mv $f ~/Pictures'
+bindsym $super+Shift+p exec scrot '%Y%m%d%H%M%S.png' -e 'mv $f ~/Pictures'
+bindsym $super+Shift+e exec $Locker
+bindsym $super+Shift+w exec firefox;workspace $ws2
+bindsym $super+Shift+f exec nautilus; focus
+bindsym $super+Shift+m exec spotify;workspace $ws5;focus
+
+#change volume
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer set Master toggle
+
+# music control
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+
+#Backlight control
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10 && pkill dunst && i3dunst && notify-send -u low 'Brightness Inc' $(blight)"
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 10 && pkill dunst && i3dunst && notify-send -u low 'Brightness Dec' $(blight)"
+
+# Macbook Commands
+# Keyboard Brightness
+bindsym XF86KbdBrightnessUp exec --no-startup-id "brightnessctl --device='smc::kbd_backlight' set +10%"
+bindsym XF86KbdBrightnessDown exec --no-startup-id "brightnessctl --device='smc::kbd_backlight' set 10%-"
+
+# kill focused window
+bindsym $super+c kill
+bindsym $alt+F4 kill
+
+# change focus
+bindsym $super+j focus left
+bindsym $super+k focus down
+bindsym $super+l focus up
+bindsym $super+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $super+Left focus left
+bindsym $super+Down focus down
+bindsym $super+Up focus up
+bindsym $super+Right focus right
+
+# move focused window
+bindsym $super+Shift+j move left
+bindsym $super+Shift+k move down
+bindsym $super+Shift+l move up
+bindsym $super+Shift+semicolon move right
+
+# move focused window using cursor keys
+bindsym $super+Shift+Left move left
+bindsym $super+Shift+Down move down
+bindsym $super+Shift+Up move up
+bindsym $super+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $super+h split h
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $super+s layout stacking
+bindsym $super+w layout tabbed
+bindsym $super+e layout toggle split
+
+# split in vertical orientation
+bindsym $super+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+# move the currently focused window to the scratchpad
+bindsym $super+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $super+minus scratchpad show
+
+# switch to workspace
+bindsym $super+Prior workspace prev
+bindsym $super+Next workspace next
+bindsym $super+1 workspace $ws1
+bindsym $super+2 workspace $ws2
+bindsym $super+3 workspace $ws3
+bindsym $super+4 workspace $ws4
+bindsym $super+5 workspace $ws5
+bindsym $super+6 workspace $ws6
+bindsym $super+7 workspace $ws7
+bindsym $super+8 workspace $ws8
+bindsym $super+9 workspace $ws9
+bindsym $super+Tab workspace back_and_forth
+
+# move focused container to workspace
+bindsym $super+Shift+Prior move container to workspace prev; workspace prev
+bindsym $super+Shift+Next move container to workspace next; workspace next
+bindsym $super+Shift+1 move container to workspace $ws1
+bindsym $super+Shift+2 move container to workspace $ws2
+bindsym $super+Shift+3 move container to workspace $ws3
+bindsym $super+Shift+4 move container to workspace $ws4
+bindsym $super+Shift+5 move container to workspace $ws5
+bindsym $super+Shift+6 move container to workspace $ws6
+bindsym $super+Shift+7 move container to workspace $ws7
+bindsym $super+Shift+8 move container to workspace $ws8
+bindsym $super+Shift+9 move container to workspace $ws9
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+
+# relaod i3wm
+bindsym $super+Shift+c reload
+
+# exit i3
+bindsym $super+q exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Return mode "default"
+}
+bindsym $super+r mode "resize"
+
+# System management mode. For rebooting, suspending, etc.
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $super+Shift+s mode "$mode_system"
+
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 1
+for_window [window_role="pop-up"] floating enable
+no_focus [window_role='pop-up']
+bindsym $super+x [urgent=latest] focus
+for_window [window_role="task_dialog"] floating enable
+# assign [class=URxvt] 1
+# assign [class=firefox|Transmission-gtk] $ws2
+# assign [class=Thunar|File-roller] $ws4
+# assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] $ws4
+assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape|spotify] $ws5
+assign [class=Steam] $ws6
+assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] $ws7
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol] floating enable
+for_window [class=URxvt|termite|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
+
+# Window border and cosmetic
+smart_borders on
+smart_gaps on
+gaps inner 5
+gaps outer 5
+
+# Set colors from Xresources
+set_from_resource $color0 i3wm.color0 #f0f0f0
+set_from_resource $color1 i3wm.color1 #f0f0f0
+set_from_resource $color2 i3wm.color2 #f0f0f0
+set_from_resource $color3 i3wm.color3 #f0f0f0
+set_from_resource $color4 i3wm.color4 #f0f0f0
+set_from_resource $color5 i3wm.color5 #f0f0f0
+set_from_resource $color6 i3wm.color6 #f0f0f0
+set_from_resource $color7 i3wm.color7 #f0f0f0
+set_from_resource $color8 i3wm.color8 #f0f0f0
+set_from_resource $color9 i3wm.color9 #f0f0f0
+set_from_resource $color10 i3wm.color10 #f0f0f0
+set_from_resource $color11 i3wm.color11 #f0f0f0
+set_from_resource $color12 i3wm.color12 #f0f0f0
+set_from_resource $color13 i3wm.color13 #f0f0f0
+set_from_resource $color14 i3wm.color14 #f0f0f0
+set_from_resource $color15 i3wm.color15 #f0f0f0
+
+# # panel
+# bar {
+#         colors {
+#         background $color0
+#         statusline $color0
+#         separator $color5
+#         # colour of border, background, and text
+#         focused_workspace       $color0 $color7 $color2
+#         active_workspace        $color0 $color0 $color7
+#         inactive_workspace      $color0 $color0 $color7
+#         urgent_workspace        $color0 $color2 $color7
+#     }
+#         status_command i3status
+# }
+
+# class                 border      backgr.     text     indicator     child_border
+client.focused          $color6     $color0     $color8  $color0       $color6
+client.focused_inactive $color8     $color0     $color8  $color0       $color0
+client.unfocused        $color8     $color0     $color8  $color0       $color0
+client.urgent           $color4     $color0     $color8  $color0       $color4
+client.placeholder      $color8     $color0     $color8  $color0       $color0
+
+client.background       $color0

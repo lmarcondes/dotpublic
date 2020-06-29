@@ -1,0 +1,11 @@
+{
+  "latex.build.args": [
+    "-pdf",
+    "-interaction=nonstopmode",
+    "-synctex=1"
+  ],
+  "latex.lint.onSave": true,
+  "latex.rootDirectory":".",
+  "latex.lint.onChange": false,
+  "coc.source.ultisnips.enable":true
+}

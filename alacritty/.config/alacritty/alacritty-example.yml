@@ -1,0 +1,47 @@
+colors:
+  bright:
+    black: '#514f4f'
+    blue: '#dd9a77'
+    cyan: '#e4c896'
+    green: '#c14c30'
+    magenta: '#d7ae5f'
+    red: '#71201c'
+    white: '#c5c4c4'
+    yellow: '#d3874f'
+
+  normal:
+    black: '#181515'
+    blue: '#dd9a77'
+    cyan: '#e4c896'
+    green: '#c14c30'
+    magenta: '#d7ae5f'
+    red: '#71201c'
+    white: '#c5c4c4'
+    yellow: '#d3874f'
+
+  primary:
+    background: '#181515'
+    foreground: '#c5c4c4'
+
+font:
+  bold:
+    family: DejaVuSansMono Nerd Font Mono
+    style: Bold
+  bold_italic:
+    family: DejaVuSansMono Nerd Font Mono
+    style: Bold Oblique
+  italic:
+    family: DejaVuSansMono Nerd Font Mono
+    style: Oblique
+  normal:
+    family: DejaVuSansMono Nerd Font Mono
+    style: Regular
+  size: 9.0
+
+scrolling:
+  history: 10000
+
+window:
+  padding:
+    x: 5
+    y: 5
